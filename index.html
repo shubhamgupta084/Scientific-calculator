@@ -1,0 +1,190 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Scientific calculator BY CASIO</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <div class="container"> 
+       <div class="display">
+           <input id="screen" type="text" placeholder="0">
+       </div>
+        <div class="btns">
+            <div class="row">
+                <button id="ce" onclick="backspc()">CE</button>
+                <button onclick="fact()">x!</button>
+                <button class="btn">(</button>
+                <button class="btn">)</button>
+                <button class="btn">%</button>
+                <button id="ac" onclick="screen.value=''">AC</button>
+            </div>
+    
+            <div class="row">
+                <button onclick="sin()">sin</button>
+                <button  onclick="pi()">pi</button>
+                <button class="btn">7</button>
+                <button class="btn">8</button>
+                <button class="btn">9</button>
+                <button class="btn">/</button>
+            </div>
+            <div class="row">
+                <button onclick="cos()">cos</button>
+                <button onclick="log()">log</button>
+                <button class="btn">4</button>
+                <button class="btn">5</button>
+                <button class="btn">6</button>
+                <button class="btn">*</button>
+            </div>
+            <div class="row">
+                <button onclick="tan()">tan</button>
+                <button onclick="sqrt()">&radic;</button>
+                <button class="btn">1</button>
+                <button class="btn">2</button>
+                <button class="btn">3</button>
+                <button class="btn">-</button>
+            </div><div class="row">
+                <button onclick="e()">e</button>
+                <button onclick="calculatePow()">x<span style="position: relative; bottom: .4em; right: .1em;">y</span></button>
+                <button class="btn">0</button>
+                <button class="btn">.</button>
+                <button id="eval" onclick="screen.value=eval(screen.value)">=</button>
+                <button class="btn">+</button>
+            </div>
+        </div>       
+
+    </div>
+    
+</body>
+<script>
+    var screen = document.querySelector('#screen');
+    var btns = document.querySelectorAll('.btn');
+
+    for (let btn of btns) {
+        btn.addEventListener('click', (e) => {
+            var btnText = e.target.innerText;
+
+            if (btnText === 'AC') {
+                screen.value = '';
+            } else if (btnText === 'CE') {
+                screen.value = screen.value.slice(0, -1); 
+            } else if (btnText === '=') {
+                try {
+                    screen.value = eval(screen.value);
+                } catch {
+                    screen.value = 'Error';
+                }
+            } else {
+                screen.value += btnText;
+            }
+        });
+    }
+    function sin()
+    
+    {
+        screen.value=Math.sin(screen.value);
+    }
+
+    function cos()
+    {
+        screen.value=Math.cos(screen.value);
+    }
+
+    function tan()
+    {
+        screen.value=Math.tan(screen.value);
+    }
+
+    function calculatePow() 
+    {
+    let base = prompt("Enter the base (x):");
+    let exponent = prompt("Enter the exponent (y):");
+    
+    if (base !== null && exponent !== null) {
+        base = parseFloat(base);
+        exponent = parseFloat(exponent);
+        
+        if (!isNaN(base) && !isNaN(exponent)) {
+            let result = Math.pow(base, exponent);
+            alert(`${base} raised to the power of ${exponent} is ${result}`);
+        } else {
+            alert("Please enter valid numbers.");
+        }
+    }
+    }
+    function sqrt()
+    {
+        screen.value=Math.sqrt(screen.value);
+    }
+
+    function log()
+    {
+        screen.value=Math.log(screen.value);
+    }
+
+    function pi()
+    {
+        screen.value= 3.14159265359;
+    }
+
+    function e()
+    {
+        screen.value=2.71828182846;
+    }
+    function fact()
+    {
+       var i, num , f;
+       f=1
+       num=screen.value;
+       for(i=1; i<=num;i++)
+       {
+         f=f*i;
+       }
+       i=i-1;
+       screen.value=f
+
+    }
+      function backspc()
+      {
+        screen.value=screen.value.substr(0,screen.value.length-1);
+      }
+    document.addEventListener('keydown', (e) => {
+        if (e.key >= '0' && e.key <= '9') {
+            screen.value += e.key;
+        } else if (e.key === '+' || e.key === '-' || e.key === '*' || e.key === '/' || e.key === '%') {
+            screen.value += e.key;
+        } else if (e.key === '.') {
+            screen.value += '.';
+        } else if (e.key === 'Backspace') {
+            screen.value = screen.value.slice(0, -1);
+        } else if (e.key === 'Enter' || e.key === '=') {
+            try {
+                evaluateExpression();
+            } catch {
+                screen.value = 'Error';
+            }
+        } else if (e.key === 'Escape') {
+            screen.value = '';
+        } else if (e.key === '(' || e.key === ')') {
+            screen.value += e.key;
+        } else if (e.key === 's' || e.key === 'S') {
+            sin();
+        } else if (e.key === 'c' || e.key === 'C') {
+            cos();
+        } else if (e.key === 't' || e.key === 'T') {
+            tan();
+        } else if (e.key === 'l' || e.key === 'L') {
+            log();
+        } else if (e.key === 'r' || e.key === 'R') {
+            sqrt();
+        } else if (e.key === 'p' || e.key === 'P') {
+            pi();
+        } else if (e.key === 'e' || e.key === 'E') {
+            e();
+        } else if (e.key === 'f' || e.key === 'F') {
+            fact();
+        }
+    });
+</script>
+</html>
